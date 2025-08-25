@@ -24,6 +24,8 @@ The aim is to **experience the database design process in practice** – from th
 - **Loan** – Loans (with due date and return date)
 - **Reservation** – Reservations (queue per book)
 
+The diagram is saved here: ***[ERD](ERD.png)***
+
 
 
 ```mermaid
