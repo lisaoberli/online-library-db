@@ -1,10 +1,14 @@
-name: CI - Test DB
+name: CI - Test PostgreSQL DB
 
-on: [push]
+on:
+  push:
+    branches: [ main ]
+  pull_request:
 
 jobs:
-  test:
+  test-db:
     runs-on: ubuntu-latest
+
     services:
       postgres:
         image: postgres:16
@@ -19,19 +23,28 @@ jobs:
           --health-interval=10s
           --health-timeout=5s
           --health-retries=5
+
     steps:
-      - uses: actions/checkout@v4
-      - name: Install psql
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Install psql client
         run: sudo apt-get install -y postgresql-client
-      - name: Run schema.sql
-        run: psql -h localhost -U postgres -d online_library_dev -f sql/schema.sql
-        env:
-          PGPASSWORD: postgres
-      - name: Run sample_data.sql
-        run: psql -h localhost -U postgres -d online_library_dev -f sql/sample_data.sql
-        env:
-          PGPASSWORD: postgres
+
+      - name: Apply schema.sql
+        run: |
+          PGPASSWORD=postgres psql \
+            -h localhost -U postgres -d online_library_dev \
+            -f sql/schema.sql
+
+      - name: Apply sample_data.sql
+        run: |
+          PGPASSWORD=postgres psql \
+            -h localhost -U postgres -d online_library_dev \
+            -f sql/sample_data.sql
+
       - name: Run queries.sql
-        run: psql -h localhost -U postgres -d online_library_dev -f sql/queries.sql
-        env:
-          PGPASSWORD: postgres
+        run: |
+          PGPASSWORD=postgres psql \
+            -h localhost -U postgres -d online_library_dev \
+            -f sql/queries.sql
