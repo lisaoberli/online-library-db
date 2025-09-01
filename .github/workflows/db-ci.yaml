@@ -48,11 +48,10 @@ jobs:
           PGPASSWORD=postgres psql \
             -h localhost -U postgres -d online_library_dev \
             -f sql/queries.sql
-            - name: Smoke test: count books
-      - name: Smoke Tests: count books
+      - name: Smoke Tests count books
         run: |
           PGPASSWORD=postgres psql -h localhost -U postgres -d online_library_dev -c "SELECT COUNT(*) AS books FROM library.book;"
-      - name: Smoke Tests: All books with Autors
+      - name: Smoke Tests All books with Autors
         run: |
           PGPASSWORD=postgres psql \
             -h localhost -U postgres -d online_library_dev \
