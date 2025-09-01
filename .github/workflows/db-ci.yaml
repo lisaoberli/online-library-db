@@ -1,0 +1,37 @@
+name: CI - Test DB
+
+on: [push]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: online_library_dev
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd="pg_isready -U postgres"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install psql
+        run: sudo apt-get install -y postgresql-client
+      - name: Run schema.sql
+        run: psql -h localhost -U postgres -d online_library_dev -f sql/schema.sql
+        env:
+          PGPASSWORD: postgres
+      - name: Run sample_data.sql
+        run: psql -h localhost -U postgres -d online_library_dev -f sql/sample_data.sql
+        env:
+          PGPASSWORD: postgres
+      - name: Run queries.sql
+        run: psql -h localhost -U postgres -d online_library_dev -f sql/queries.sql
+        env:
+          PGPASSWORD: postgres
