@@ -31,12 +31,9 @@ The diagram is saved here: ***[ERD](ERD.png)***
 ```mermaid
 erDiagram
   USER ||--o{ LOAN : borrows
-  USER ||--o{ RESERVATION : places
-  ROLE ||--o{ USER : assigned
   BOOK ||--o{ BOOK_COPY : has
-  BOOK ||--o{ BOOK_AUTHOR : has
+  BOOK ||--o{ BOOK_AUTHOR : map
   AUTHOR ||--o{ BOOK_AUTHOR : writes
-  BOOK }o--|| CATEGORY : "belongs to"
-  BOOK }o--|| PUBLISHER : "published by"
   BOOK_COPY ||--o{ LOAN : "loaned as"
+
 ```
