@@ -1,3 +1,6 @@
+SET search_path = library, public;
+BEGIN;
+
 -- Autor:innen
 INSERT INTO author (full_name) VALUES
   ('Lauren Roberts'),
