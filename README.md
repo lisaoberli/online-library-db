@@ -1,6 +1,6 @@
 # online-library-db
 
-# Online Library – Database Project
+# Online Library – Database Project - Overview
 
 This project is part of a **modular assignment** within the *Databases* module.  
 The aim is to **experience the database design process in practice** – from the ER model and normalization to SQL scripts and sample queries.
@@ -13,20 +13,17 @@ The aim is to **experience the database design process in practice** – from th
 - Implementation in SQL (PostgreSQL)
 - Documentation and presentation (lecture, quick guide, DB export)
 
-## ER Diagramm
-- **User** – Persons (students, lecturers, administrators)
-- **Role** – Roles (MEMBER, LIBRARIAN, ADMIN)  
+## Database Schema Diagram
+- **User** – Persons (students, lecturers, administrators)  
 - **Book** – Works with ISBN, title, publisher, category
-- **Author** – Authors (n:m relationship to books)
-- **Publisher** – Publishers
+- **Bookauthor** – Bookauthor
+- **Author** – Authors 
 - **Category** – Categories/genres  
 - **BookCopy** – Physical copies of a book
 - **Loan** – Loans (with due date and return date)
-- **Reservation** – Reservations (queue per book)
-
-The diagram is saved here: ***[ERD](ERD.png)***
 
 
+## ER Diagram
 
 ```mermaid
 erDiagram
@@ -37,3 +34,26 @@ erDiagram
   BOOK_COPY ||--o{ LOAN : "loaned as"
 
 ```
+## Relations
+- **user 1**  –> **n loan**
+- **book 1**  –> **n bookcopy**
+- **book n**  –> **m author** (via bookauthor)
+- **book 1**  –> **n loan**
+
+The diagram is saved here: ***[Physical ERD](ERD.png)***
+
+# Online Library – Database Project - Implementation
+- Schema file: [sql/schema.sql](sql/schema.sql)
+- Sample data: [sql/sample_data.sql](sql/sample_data.sql)
+- Queries: [sql/queries.sql](sql/queries.sql)
+
+## CI/CD Pipeline
+
+Workflow File: [.github\workflows\db-ci.yaml](.github\workflows\db-ci.yaml)
+
+A GitHub Actions workflow builds and tests the database on every push on main.
+- starts a PostgreSQL service container
+- runs schema.sql and sample_data.sql
+- executes smoke tests (queries.sql)
+
+
