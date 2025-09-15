@@ -70,4 +70,26 @@ pg_dump -U postgres -d online_library_dev -f dump.sql
 The artifact is uploaded in the pipeline run overview at the bottom:
 [ DB Export](db_dump.png)
 
+## Future Improvements
+### Security and Flexibility
+
+Currently, database credentials (user, password, database name) are hardcoded in the GitHub Actions workflow.  
+As a future improvement, these could be stored in **GitHub Secrets & Variables**:
+
+- **Secrets** (encrypted, hidden): e.g. `POSTGRES_PASSWORD`  
+- **Variables** (public, non-sensitive): e.g. `POSTGRES_USER`, `POSTGRES_DB`
+
+### Improve Smoke Tests
+Right now, the smoke tests simply run SQL queries and print raw results.  
+In the future, they could be made **more readable** by:
+- Adding labels (e.g., `Total Books: 5`)  
+- Returning test-style outputs (`PASS/FAIL`)  
+- Aggregating results into a small summary table
+
+### Organize Database Exports
+Currently, dumps are exported as a single file (`dump.sql`).  
+Improvements could include:
+- Saving dumps inside a dedicated `exports/` folder  
+- Separating schema-only (`schema.sql`) and data-only (`data.sql`) dumps  
+- Keeping exports versioned per pipeline run
 
