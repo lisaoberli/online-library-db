@@ -74,7 +74,7 @@ jobs:
       - name: Export database
         env: postgres
           PGPASSWORD: postgres
-        run: |
+        run:  |
           pg_dump -h localhost -U postgres -d online_library_dev > dump.sql
       - name: Upload dump.sql as artifact
         uses: actions/upload-artifact@v3
