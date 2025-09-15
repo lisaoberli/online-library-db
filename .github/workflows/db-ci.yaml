@@ -72,10 +72,11 @@ jobs:
                 JOIN library.book b ON b.book_id = bc.book_id
                 WHERE l.returned_at IS NULL AND l.due_at < CURRENT_DATE;"
       - name: Export database
-        env: postgres
+        env:
           PGPASSWORD: postgres
-        run:  |
+        run: |
           pg_dump -h localhost -U postgres -d online_library_dev > dump.sql
+
       - name: Upload dump.sql as artifact
         uses: actions/upload-artifact@v3
         with:
