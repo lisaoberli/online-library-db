@@ -55,5 +55,19 @@ A GitHub Actions workflow builds and tests the database on every push on main.
 - starts a PostgreSQL service container
 - runs schema.sql and sample_data.sql
 - executes smoke tests (queries.sql)
+- exports a db dump and uploads it in github repo with artifact
+
+## Database Export
+
+The database can be exported using pg_dump:
+
+sample from workflow file: [.github\workflows\db-ci.yaml](.github\workflows\db-ci.yaml)
+
+```bash
+pg_dump -U postgres -d online_library_dev -f dump.sql
+```
+
+The artifact is uploaded in the pipeline run overview at the bottom:
+[ DB Export](db_dump.png)
 
 
