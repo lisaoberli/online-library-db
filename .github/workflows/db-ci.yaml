@@ -78,7 +78,7 @@ jobs:
           pg_dump -h localhost -U postgres -d online_library_dev > dump.sql
 
       - name: Upload dump.sql as artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: db-dump
           path: dump.sql
